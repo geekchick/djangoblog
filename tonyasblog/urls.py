@@ -14,17 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
-#from posts import views #import views files
+from django.conf.urls import url
 import posts.views
 import sitepages.views
 from django.conf.urls.static import static # import image, allows us to serve images
 from django.conf import settings # import image, get info inside settings.py
+from posts import views
 
+#r'^signup/'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', posts.views.home, name="home"),
-    re_path('posts/(?P<post_id>[0-9]+)/$', posts.views.post_details, name = "post_detail"),
-    path('about/', sitepages.views.about, name="about"),
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', posts.views.home, name="home"),
+    url(r'^posts/(?P<post_id>[0-9]+)/$', posts.views.post_details, name = "post_detail"),
+    url(r'^about/', sitepages.views.about, name="about"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
